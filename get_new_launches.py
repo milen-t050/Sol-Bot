@@ -6,7 +6,8 @@ import requests
 import time
 import json
 import nice_funcs as n
-import ctypes
+import tkinter as tk
+from tkinter import messagebox
 
 # CONFIG VARIABLES
 MAX_SELL_PERCENTAGE = 80
@@ -85,9 +86,15 @@ current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 # Create the message
 message = f"Finished Scanning and Analyzing Solana Tokens at {current_time}"
 
-# Display the message box with an alert sound
-# 0x40 is the flag for the 'information' icon and sound, 0x0 is for 'OK' button
-ctypes.windll.user32.MessageBoxW(0, message, "Alert", 0x40 | 0x0)
+# Create a root window, but keep it hidden
+root = tk.Tk()
+root.withdraw()  # Hide the main window
+
+# Display the message box with an information icon
+messagebox.showinfo("Alert", message)
+
+# Destroy the root window after the message box is closed
+root.destroy()
     
 
 
