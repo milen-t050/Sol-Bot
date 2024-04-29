@@ -41,64 +41,64 @@ def new_launches(data):
     #print(new_launches)
     return new_launches
 
-new_launches = new_launches(data)
+if new_data == True:
+    new_launches = new_launches(data)
 
-# load the CSV w/ last filer
-#df = pd.read_csv("new_launches.csv")
+    # load the CSV w/ last filer
+    #df = pd.read_csv("new_launches.csv")
 
-# Create an empty DF for the results
-results_df = pd.DataFrame()
+    # Create an empty DF for the results
+    results_df = pd.DataFrame()
 
-# Iterate over each row in the DF
-for index, row in new_launches.iterrows():
-    #Use the 'token_overview' func from 'nice_funs' for each address
-    address = row['address']
-    token_data = n.token_overview(address)
+    # Iterate over each row in the DF
+    for index, row in new_launches.iterrows():
+        #Use the 'token_overview' func from 'nice_funs' for each address
+        address = row['address']
+        token_data = n.token_overview(address)
 
-    # If token_data is not None, append the data to the reuslts DF
-    if (token_data is not None 
-        and not token_data.get('rug_pull', False)
-        and token_data.get('minimum_trades_met', False)
-        and token_data.get('sell_condition_over', False)
-        and token_data.get('hasDescription', 'False')):
-        if isinstance(token_data, dict):  # Ensuring token_data is in DataFrame format
-            token_data = pd.DataFrame([token_data])
-        token_data['address'] = address  # Add address to the data
-        temp_data = token_data.copy()
+        # If token_data is not None, append the data to the reuslts DF
+        if (token_data is not None 
+            and not token_data.get('rug_pull', False)
+            and token_data.get('minimum_trades_met', False)
+            and token_data.get('sell_condition_over', False)
+            and token_data.get('hasDescription', 'False')):
+            if isinstance(token_data, dict):  # Ensuring token_data is in DataFrame format
+                token_data = pd.DataFrame([token_data])
+            token_data['address'] = address  # Add address to the data
+            temp_data = token_data.copy()
 
-        # Before attempting to pop 'priceChangeXhrs', check if the column exists in the DataFrame
-        if 'priceChangeXhrs' in temp_data.columns:
-            temp_data.pop('priceChangeXhrs')
+            # Before attempting to pop 'priceChangeXhrs', check if the column exists in the DataFrame
+            if 'priceChangeXhrs' in temp_data.columns:
+                temp_data.pop('priceChangeXhrs')
 
-        # Using pd.concat instead of .append()
-        results_df = pd.concat([results_df, temp_data], ignore_index=True)
+            # Using pd.concat instead of .append()
+            results_df = pd.concat([results_df, temp_data], ignore_index=True)
 
-# After processing all rows, sort the DataFrame by 'buy_percentage'
-if 'buy_percentage' in results_df.columns:
-    results_df = results_df.sort_values(by='buy_percentage', ascending=False)
+    # After processing all rows, sort the DataFrame by 'buy_percentage'
+    if 'buy_percentage' in results_df.columns:
+        results_df = results_df.sort_values(by='buy_percentage', ascending=False)
+        
+    # Save the results to CSV
+    results_df.to_csv('hyper-sorted-sol.csv', index=False)
+
+    # Get the current date and time
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Create the message
+    message = f"Finished Scanning and Analyzing Solana Tokens at {current_time}"
+
+    # Create a root window, but keep it hidden
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+
+    # Display the message box with an information icon
+    messagebox.showinfo("Alert", message)
+
+    # Destroy the root window after the message box is closed
+    root.destroy()
+else:
+    print("No new data to process")
     
-# Save the results to CSV
-results_df.to_csv('hyper-sorted-sol.csv', index=False)
-
-# Get the current date and time
-current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-# Create the message
-message = f"Finished Scanning and Analyzing Solana Tokens at {current_time}"
-
-# Create a root window, but keep it hidden
-root = tk.Tk()
-root.withdraw()  # Hide the main window
-
-# Display the message box with an information icon
-messagebox.showinfo("Alert", message)
-
-# Destroy the root window after the message box is closed
-root.destroy()
-    
-
-
-
 
 #Function to nicely print the response
 def print_transaction_details(transactions):

@@ -4,7 +4,6 @@ import personal as p
 import pandas as pd
 import datetime
 import pytz
-import time
 
 def birdEye_bot():
     url = "https://public-api.birdeye.so/defi/tokenlist"
@@ -20,8 +19,6 @@ def birdEye_bot():
     min_liq = 2000
     min_24hr_vol = 2000
     n = 1
-    delayT = 1
-    # delay with 1.5 worked, 1.4 worked, 1.375 worked, 1.37 worked, 1 didn't work, 1.25 didn't work, 1.3 didnt work, 1.35 didn't work, 1.355 didn't work, 1.36 didnt work, 1.365 didnt work
     while total_tokens < token_limit:
         print("Scaned Tokens %d" % total_tokens)
         n += 1
@@ -34,7 +31,6 @@ def birdEye_bot():
             tokens.extend(new_tokens)
             total_tokens += len(new_tokens)
             offset += limit
-            #time.sleep(delayT)
         else:
             print("Failed to retrieve data:", response.status_code)
             break

@@ -81,3 +81,5 @@ API
 
 
 later build in rust to make proceess more efficent and faster
+maybe use multiple threads to speed up process
+    -split the new launches csv into chunks and send each chunk to its own thread and get the output
