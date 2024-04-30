@@ -5,14 +5,30 @@ import pandas as pd
 import pprint
 import re
 
+
 # Constants for minimum trades and maximum sell percentage criteria
 MIN_TRADES = 10
-MAX_SELL_PERCENTAGE = 80
+MAX_SELL_PERCENTAGE = 70
 BASE_URL = "https://public-api.birdeye.so/defi/"
 #SAMPLE_ADDRESS = "BY8T5eNHVeDvZ9ueWJ2m8TjtGr4qrJWrznczq7muSd73"
 
 # Pretty printer setup for debugging and clear output of JSON data
 pp = pprint.PrettyPrinter(indent=4)
+
+def security_check(address):
+
+    '''
+    use:
+    - top10HolderPercent, top10UserPercent
+    - freezeAuthority, freezeable
+    '''
+
+    url = f"{BASE_URL}token_security?address={address}"
+    headers = {"x-chain": "solana", "X-API-KEY": p.bird}
+
+    response = requests.get(url, headers=headers)
+
+    return response if response.status_code == 200 else None
 
 def pretty_print_json(data):
     """Utility function to print JSON data in a formatted manner."""
