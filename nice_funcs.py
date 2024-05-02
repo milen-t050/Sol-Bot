@@ -71,10 +71,10 @@ def parse_overview_data(data, address):
         'view24h': data.get('view24h', 0),  # Views in the last 24 hours
         'liquidity': data.get('liquidity', 0),  # Current liquidity of the token
         })
-        # Safely extracting the description, considering 'extensions' might be None
+    # Safely extracting the description, considering 'extensions' might be None
     extensions = data.get('extensions', {})
     if extensions is not None:
-        result.update({'links': extract_links(extensions.get('description', ''))})
+        result.update(extract_links(extensions.get('description', '')))  # Updating to incorporate specific columns for each link type
     return result
 
 def calculate_percentages(result):
@@ -97,17 +97,17 @@ def extract_price_changes(data):
     return {'priceChangeXhrs': {k: v for k, v in data.items() if 'priceChange' in k}}
 
 def extract_links(description):
-    """Extracts and categorizes links from the token description based on their domain."""
+    """Extracts and categorizes links from the token description based on their domain, placing them into independent columns."""
     urls = find_urls(description)
-    links = []
+    link_data = {'telegram': None, 'twitter': None, 'website': None}  # Default values set to None
     for url in urls:
         if 't.me' in url:
-            links.append({'telegram': url})  # Telegram links
+            link_data['telegram'] = url  # Set Telegram link
         elif 'twitter.com' in url:
-            links.append({'twitter': url})  # Twitter links
+            link_data['twitter'] = url  # Set Twitter link
         else:
-            links.append({'website': url})  # Assume any other URL is the token's website
-    return links
+            link_data['website'] = url  # Set website link
+    return link_data
 
 # MIN_TRADES = 10
 # MAX_SELL_PERCENTAGE = 80

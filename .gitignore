@@ -3,3 +3,5 @@ filtered_pricechange.csv
 new_launches.csv
 hyper-sorted-sol.csv
 final_sort.csv
+__pycache__
+buying_df.csv
