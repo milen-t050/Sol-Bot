@@ -4,21 +4,21 @@ This Solana Trading Bot is designed to scan the Solana blockchain for newly laun
 
 Features
 New Token Discovery: Scans the Solana blockchain for newly launched tokens.
-Filtering Criteria:
-Liquidity (Total Value Locked - TVL)
-Market Cap (MC)
-Number of holders
-Recent trading volume and last trade timestamp
-Freezable status and mint authority
-Social presence (Twitter, website)
-Buyer Implementation:
-Ability to sort tokens by specific parameters and execute buy/sell trades.
-Automated trading using Solana RPC and solders to manage transactions.
-Smart Money Contracts: Trades are executed efficiently by integrating with smart money contracts.
-Birdeye API: Used to gather token data, including OHLCV (Open, High, Low, Close, Volume), market cap, and token-specific metrics.
-Installation
-Prerequisites
-Ensure you have the following installed:
+  Filtering Criteria:
+  Liquidity (Total Value Locked - TVL)
+  Market Cap (MC)
+  Number of holders
+  Recent trading volume and last trade timestamp
+  Freezable status and mint authority
+  Social presence (Twitter, website)
+  Buyer Implementation:
+  Ability to sort tokens by specific parameters and execute buy/sell trades.
+  Automated trading using Solana RPC and solders to manage transactions.
+  Smart Money Contracts: Trades are executed efficiently by integrating with smart money contracts.
+  Birdeye API: Used to gather token data, including OHLCV (Open, High, Low, Close, Volume), market cap, and token-specific metrics.
+  Installation
+  Prerequisites
+  Ensure you have the following installed:
 
 Python 3.x
 Solana CLI
